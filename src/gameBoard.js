@@ -1,7 +1,8 @@
+import { markAdjacentCells } from "./optimizeGameboard.js";
 import { Ship } from "./ship.js";
-import { findShipDirection } from "./gameboardFunctions.js";
-
+import { findShipDirection } from "./shipDirection.js";
 const Gameboard = () => {
+
   // Create a gameboard
   let gameBoard = [];
   for (let i = 0; i < 10; i++) {
@@ -14,13 +15,13 @@ const Gameboard = () => {
   const setCoordinates = () => {
     return Math.ceil(Math.random() * 9);
   }
-
+  
   let adjacentCoordinates = {};
 
   const placeShip = (ship) => {
     let startingPointX = setCoordinates();
     let startingPointY = setCoordinates();
-
+    
     // Keep finding until random X and Y points a point where no ship is found
     if (gameBoard[startingPointX][startingPointY] !== '') {
       while (gameBoard[startingPointX][startingPointY] !== null) {
@@ -32,24 +33,32 @@ const Gameboard = () => {
     const shipDirection = findShipDirection(startingPointX, startingPointY, ship.shipLength, gameBoard);
     
     // Place the ships
-    adjacentCoordinates[ship.shipLength] = [];
+    adjacentCoordinates[ship.shipLength] = {
+      shipCoordinates: [],
+    };
     for (let i = 0; i < ship.shipLength; i++) {
       if (shipDirection === 'leftHorizontal') {
-        gameBoard[startingPointX][startingPointY--] = ship;
-        adjacentCoordinates[ship.shipLength].push([startingPointX, startingPointY]);
+        gameBoard[startingPointX][startingPointY] = ship;
+        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
+        startingPointY--
+
       } else if (shipDirection === 'rightHorizontal') {
-        gameBoard[startingPointX][startingPointY++] = ship;
-        adjacentCoordinates[ship.shipLength].push([startingPointX, startingPointY]);
+        gameBoard[startingPointX][startingPointY] = ship;
+        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
+        startingPointY++;
       } else if (shipDirection === 'upwardVertical') {
-        gameBoard[startingPointX--][startingPointY] = ship;
-        adjacentCoordinates[ship.shipLength].push([startingPointX, startingPointY]);
+        gameBoard[startingPointX][startingPointY] = ship;
+        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
+        startingPointX--
       } else if (shipDirection === 'downwardVertical') {
-        gameBoard[startingPointX++][startingPointY] = ship;
-        adjacentCoordinates[ship.shipLength].push([startingPointX, startingPointY]);
+        gameBoard[startingPointX][startingPointY] = ship;
+        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
+        startingPointX--
       }
     }
+    console.log(adjacentCoordinates[ship.shipLength].shipCoordinates)
 
-    
+    gameBoard = markAdjacentCells(gameBoard, adjacentCoordinates, ship.shipLength, shipDirection);
   }
 
   // Place a 5-length carrier   
