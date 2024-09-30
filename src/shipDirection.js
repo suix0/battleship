@@ -1,4 +1,4 @@
-const findShipDirection = (x, y, shipLength, gameBoard) => {
+const getShipDirection = (x, y, shipLength, gameBoard) => {
   // Optimize the coordinates to make sure that it wont go to undefined
   let directions = {
     leftHorizontal: false,
@@ -34,4 +34,4 @@ const findShipDirection = (x, y, shipLength, gameBoard) => {
   return shipDirection;
 }
 
-export { findShipDirection };
+export { getShipDirection };

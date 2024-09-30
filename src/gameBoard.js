@@ -1,6 +1,6 @@
 import { markAdjacentCells } from "./optimizeGameboard.js";
 import { Ship } from "./ship.js";
-import { findShipDirection } from "./shipDirection.js";
+import { getShipDirection } from "./shipDirection.js";
 const Gameboard = () => {
 
   // Create a gameboard
@@ -30,7 +30,7 @@ const Gameboard = () => {
       }
     }
 
-    const shipDirection = findShipDirection(startingPointX, startingPointY, ship.shipLength, gameBoard);
+    const shipDirection = getShipDirection(startingPointX, startingPointY, ship.shipLength, gameBoard);
     
     // Place the ships
     adjacentCoordinates[ship.shipLength] = {
@@ -38,22 +38,21 @@ const Gameboard = () => {
     };
     for (let i = 0; i < ship.shipLength; i++) {
       if (shipDirection === 'leftHorizontal') {
+        startingPointY--;
         gameBoard[startingPointX][startingPointY] = ship;
         adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
-        startingPointY--
-
       } else if (shipDirection === 'rightHorizontal') {
-        gameBoard[startingPointX][startingPointY] = ship;
-        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
         startingPointY++;
+        gameBoard[startingPointX][startingPointY] = ship;
+        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
       } else if (shipDirection === 'upwardVertical') {
+        startingPointX--;
         gameBoard[startingPointX][startingPointY] = ship;
         adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
-        startingPointX--
       } else if (shipDirection === 'downwardVertical') {
+        startingPointX++;
         gameBoard[startingPointX][startingPointY] = ship;
         adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
-        startingPointX--
       }
     }
     console.log(adjacentCoordinates[ship.shipLength].shipCoordinates)
