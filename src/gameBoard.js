@@ -34,7 +34,6 @@ const Gameboard = () => {
       downwardVertical: false
     }
 
-    // Check for the left horizontal of the coordinates
     let [xCopy1, xCopy2, xCopy3, xCopy4] = [startingPointX, startingPointX, startingPointX, startingPointX];
     let [yCopy1, yCopy2, yCopy3, yCopy4] = [startingPointY, startingPointY, startingPointY, startingPointY];
 
