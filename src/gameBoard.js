@@ -1,4 +1,5 @@
 import { Ship } from "./ship.js";
+import { findShipDirection } from "./gameboardFunctions.js";
 
 const Gameboard = () => {
   // Create a gameboard
@@ -14,11 +15,13 @@ const Gameboard = () => {
     return Math.ceil(Math.random() * 9);
   }
 
+  let adjacentCoordinates = {};
+
   const placeShip = (ship) => {
     let startingPointX = setCoordinates();
     let startingPointY = setCoordinates();
 
-    // Keep finding random X and Y points a point where no ship is found
+    // Keep finding until random X and Y points a point where no ship is found
     if (gameBoard[startingPointX][startingPointY] !== '') {
       while (gameBoard[startingPointX][startingPointY] !== null) {
         startingPointX = setCoordinates();
@@ -26,51 +29,27 @@ const Gameboard = () => {
       }
     }
 
-    // Optimize the coordinates to make sure that it wont go to undefined
-    let directions = {
-      leftHorizontal: false,
-      rightHorizontal: false,
-      upwardVertical: false,
-      downwardVertical: false
-    }
-
-    let [xCopy1, xCopy2, xCopy3, xCopy4] = [startingPointX, startingPointX, startingPointX, startingPointX];
-    let [yCopy1, yCopy2, yCopy3, yCopy4] = [startingPointY, startingPointY, startingPointY, startingPointY];
-
-    for(let i = 0; i < ship.shipLength; i++) {
-      // Check left horizontal for out of bound
-      if ((yCopy1-- > gameBoard.length && yCopy1 < 0 || gameBoard[yCopy1] === undefined) || (gameBoard[xCopy1][yCopy1] === undefined)) {
-        directions.leftHorizontal = true;
-      }
-      // Check right horizontal for out of bound
-      if ((yCopy2++ > gameBoard.length && yCopy2 < 0 || gameBoard[yCopy2] === undefined) || (gameBoard[xCopy2][yCopy2] === undefined)) {
-          directions.rightHorizontal = true;
-      }
-      // Check downward vertical for out of bound
-      if ((xCopy3++ > gameBoard.length && xCopy3 < 0 || gameBoard[xCopy3] === undefined) || (gameBoard[xCopy3][yCopy3] === undefined)) {
-        directions.downwardVertical = true;
-      }
-      // Check upward vertical for out of bound
-      if ((xCopy4-- > gameBoard.length && xCopy4 < 0 || gameBoard[xCopy4] === undefined) || (gameBoard[xCopy4][yCopy4] === undefined)) {
-        directions.upwardVertical = true;
-      }
-    }
-
-    let shipDirection = Object.keys(directions).filter((direction) => directions[direction] === false);
-    shipDirection = shipDirection[parseInt(Math.random() * (shipDirection.length))];
-
+    const shipDirection = findShipDirection(startingPointX, startingPointY, ship.shipLength, gameBoard);
+    
     // Place the ships
+    adjacentCoordinates[ship.shipLength] = [];
     for (let i = 0; i < ship.shipLength; i++) {
       if (shipDirection === 'leftHorizontal') {
         gameBoard[startingPointX][startingPointY--] = ship;
+        adjacentCoordinates[ship.shipLength].push([startingPointX, startingPointY]);
       } else if (shipDirection === 'rightHorizontal') {
         gameBoard[startingPointX][startingPointY++] = ship;
+        adjacentCoordinates[ship.shipLength].push([startingPointX, startingPointY]);
       } else if (shipDirection === 'upwardVertical') {
         gameBoard[startingPointX--][startingPointY] = ship;
+        adjacentCoordinates[ship.shipLength].push([startingPointX, startingPointY]);
       } else if (shipDirection === 'downwardVertical') {
         gameBoard[startingPointX++][startingPointY] = ship;
+        adjacentCoordinates[ship.shipLength].push([startingPointX, startingPointY]);
       }
     }
+
+    
   }
 
   // Place a 5-length carrier   
@@ -78,25 +57,25 @@ const Gameboard = () => {
   carrierShip.shipLength = 5;
   placeShip(carrierShip);
   
-  // Place a 4-length battleship
-  const battleShip = Ship();
-  battleShip.shipLength = 4;
-  placeShip(battleShip);
+  // // Place a 4-length battleship
+  // const battleShip = Ship();
+  // battleShip.shipLength = 4;
+  // placeShip(battleShip);
 
-  // Place a 3-length cruiser
-  const cruiserShip = Ship();
-  cruiserShip.shipLength = 3;
-  placeShip(cruiserShip);
+  // // Place a 3-length cruiser
+  // const cruiserShip = Ship();
+  // cruiserShip.shipLength = 3;
+  // placeShip(cruiserShip);
 
-  // Place a 3-length submarine
-  const submarineShip = Ship();
-  submarineShip.shipLength = 3;
-  placeShip(submarineShip);
+  // // Place a 3-length submarine
+  // const submarineShip = Ship();
+  // submarineShip.shipLength = 3;
+  // placeShip(submarineShip);
 
-  // Place a 3-length destroyer
-  const destroyerShip = Ship();
-  destroyerShip.shipLength = 2;
-  placeShip(destroyerShip);
+  // // Place a 3-length destroyer
+  // const destroyerShip = Ship();
+  // destroyerShip.shipLength = 2;
+  // placeShip(destroyerShip);
 
   return { gameBoard, placeShip };
 }

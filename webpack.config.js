@@ -11,9 +11,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        exclude: ['node_modules'],
-        use: ['babel-loader'],
+        test: /\.js$/, // Match JavaScript files
+        exclude: /node_modules/, // Exclude the node_modules directory
+        use: {
+          loader: 'babel-loader', // Use babel-loader
+          options: {
+            presets: ['@babel/preset-env'], // Use the env preset for modern JavaScript
+          },
+        },
       },
       {
         test: /\.css$/,
@@ -38,17 +43,4 @@ module.exports = {
       title: "Battleship"
     }),
   ],
-  resolve: {
-    alias: {
-      config$: './configs/app-config.js',
-      react: './vendor/react-master',
-    },
-    extensions: ['.js', '.jsx'],
-    modules: [
-      'node_modules',
-      'bower_components',
-      'shared',
-      '/shared/vendor/modules',
-    ],
-  },
 };
