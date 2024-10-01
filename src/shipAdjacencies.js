@@ -1,7 +1,4 @@
 const markAdjacentCells = (gameboard, adjacentCoordinates, shipLength, direction) => {
-  console.table(gameboard);
-  console.log(direction);
-  console.log(adjacentCoordinates[shipLength].shipCoordinates);
   // Get the x and y coordinates of and store themseparately 
   let x1 = adjacentCoordinates[shipLength].shipCoordinates[0][0];
   let y1 = adjacentCoordinates[shipLength].shipCoordinates[0][1];
@@ -97,7 +94,7 @@ const markAdjacentCells = (gameboard, adjacentCoordinates, shipLength, direction
       }
     }
   }
-  console.table(gameboard)
+  return gameboard;
 }
 
 

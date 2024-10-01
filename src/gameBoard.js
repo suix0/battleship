@@ -1,8 +1,8 @@
-import { markAdjacentCells } from "./optimizeGameboard.js";
+import { markAdjacentCells } from "./shipAdjacencies.js";
 import { Ship } from "./ship.js";
 import { getShipDirection } from "./shipDirection.js";
-const Gameboard = () => {
 
+const Gameboard = () => {
   // Create a gameboard
   let gameBoard = [];
   for (let i = 0; i < 10; i++) {
@@ -58,6 +58,8 @@ const Gameboard = () => {
     }
 
     gameBoard = markAdjacentCells(gameBoard, adjacentCoordinates, ship.shipLength, shipDirection);
+
+    console.table(gameBoard);
   }
 
   // Place a 5-length carrier   

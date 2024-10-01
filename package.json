@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Test Driven Development - Battleship Implementation using HTML, CSS, JavaScript",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "jest",
     "start": "webpack serve --open",
