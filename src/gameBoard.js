@@ -67,25 +67,25 @@ const Gameboard = () => {
   carrierShip.shipLength = 5;
   placeShip(carrierShip);
   
-  // // Place a 4-length battleship
-  // const battleShip = Ship();
-  // battleShip.shipLength = 4;
-  // placeShip(battleShip);
+  // Place a 4-length battleship
+  const battleShip = Ship();
+  battleShip.shipLength = 4;
+  placeShip(battleShip);
 
-  // // Place a 3-length cruiser
-  // const cruiserShip = Ship();
-  // cruiserShip.shipLength = 3;
-  // placeShip(cruiserShip);
+  // Place a 3-length cruiser
+  const cruiserShip = Ship();
+  cruiserShip.shipLength = 3;
+  placeShip(cruiserShip);
 
-  // // Place a 3-length submarine
-  // const submarineShip = Ship();
-  // submarineShip.shipLength = 3;
-  // placeShip(submarineShip);
+  // Place a 3-length submarine
+  const submarineShip = Ship();
+  submarineShip.shipLength = 3;
+  placeShip(submarineShip);
 
-  // // Place a 3-length destroyer
-  // const destroyerShip = Ship();
-  // destroyerShip.shipLength = 2;
-  // placeShip(destroyerShip);
+  // Place a 3-length destroyer
+  const destroyerShip = Ship();
+  destroyerShip.shipLength = 2;
+  placeShip(destroyerShip);
 
   return { gameBoard, placeShip };
 }
