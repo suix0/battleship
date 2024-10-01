@@ -1,90 +1,105 @@
 const markAdjacentCells = (gameboard, adjacentCoordinates, shipLength, direction) => {
   console.table(gameboard);
-  adjacentCoordinates[shipLength].adjacencies = []; 
-  adjacentCoordinates = checkAdjacency(gameboard, adjacentCoordinates, direction, shipLength);
-  console.log(adjacentCoordinates[shipLength].adjacencies);
-}
-
-
-const checkAdjacency = (gameboard, adjacentCoordinates, direction, shipLength) => {
-  for (let i = 0; i < shipLength; i++) {
-    // Get the x and y coordinates of and store themseparately 
-    let x = adjacentCoordinates[shipLength].shipCoordinates[i][0];
-    let y = adjacentCoordinates[shipLength].shipCoordinates[i][1];
-    // Check for adjacencies for horizontal ship placement  
-    if (direction === 'rightHorizontal') {
-      if (i === 0) {
-         // Mark the bottom-adjacent of current coordinate if it is not undefined and is null
-         if (++x !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          --x;
+  console.log(direction);
+  console.log(adjacentCoordinates[shipLength].shipCoordinates);
+  // Get the x and y coordinates of and store themseparately 
+  let x1 = adjacentCoordinates[shipLength].shipCoordinates[0][0];
+  let y1 = adjacentCoordinates[shipLength].shipCoordinates[0][1];
+  let x2 = x1;
+  let y2 = y1;
+  // Mark adjacencies in the board for horizontal ship placement 
+  if (direction.includes('Horizontal')){
+    if (direction.includes('left')) {
+      --x1;
+      ++y1;
+      ++x2;
+      ++y2;
+      for (let i = 0; i < shipLength + 2; i++) {
+        if (gameboard[y1] !== undefined) {
+          if (i === 0 || i === shipLength + 1) {
+            gameboard[++x1][y1] = 'X';
+            --x1;
+          }
         }
-        // Mark the top-adjacent of current coordinate if it is not undefined and is null
-        if (--x !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          ++x;
+        if (gameboard[x1] !== undefined && gameboard[y1] !== undefined) {
+          gameboard[x1][y1--] = 'X';
+        } else {
+          continue;
         }
-        // Mark the top-left-adjacent of current coordinate if it is not undefined and is null
-        if (--x !== undefined && --y !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          ++x;
-          ++y;
+        if (gameboard[x2] !== undefined && gameboard[y2] !== undefined) {
+          gameboard[x2][y2--] = 'X';
+        } else {
+          continue;
         }
-        // Mark the bottom-left-adjacent of current coordinate if it is not undefined and is null
-        if (++x !== undefined && --y !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          --x;
-          ++y;
+      }
+    } else {
+      --x1;
+      --y1;
+      ++x2;
+      --y2;
+      for (let i = 0; i < shipLength + 2; i++) {
+        if (gameboard[y1] !== undefined) {
+          if (i === 0 || i === shipLength + 1) {
+            gameboard[++x1][y1] = 'X';
+            --x1;
+          }
         }
-         // Mark the left-adjacent of current coordinate if it is not undefined and is null
-         if (--y !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          ++y;
+        if (gameboard[x1] !== undefined && gameboard[y1] !== undefined) {
+          gameboard[x1][y1++] = 'X';
+        } else {
+          continue
         }
-      } else if (i === (shipLength - 1)) {
-        // Mark the bottom-adjacent of current coordinate if it is not undefined and is null
-        if (++x !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          --x;
+        if (gameboard[x2] !== undefined && gameboard[y2] !== undefined) {
+          gameboard[x2][y2++] = 'X';
+        } else {
+          continue
         }
-        // Mark the top-adjacent of current coordinate if it is not undefined and is null
-        if (--x !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          ++x;
+      }
+    }
+  } else if (direction.includes('Vertical')) {
+    if (direction.includes('upward')) {
+      ++x1;
+      --y1;
+      ++x2;
+      ++y2;
+      for (let i = 0; i < shipLength + 2; i++) {
+        if (gameboard[x1] !== undefined) {
+          if (i === 0 || i === shipLength + 1) {
+            gameboard[x1][++y1] = 'X';
+            --y1;
+          }
         }
-        // Mark the top-right-adjacent of current coordinate if it is not undefined and is null
-        if (++x !== undefined && ++y !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          --x;
-          --y;
-        } 
-        // Mark the bottom-right-adjacent of current coordinate if it is not undefined and is null
-        if (--x !== undefined && ++y !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          ++x;
-          --y;
+        if (gameboard[x1] !== undefined && gameboard[y1] !== undefined) {
+          gameboard[x1--][y1] = 'X';
         }
-        // Mark the right-adjacent of current coordinate if it is not undefined and is null
-        if (++y !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          --y;
+        if (gameboard[x2] !== undefined && gameboard[y2] !== undefined) {
+          gameboard[x2--][y2] = 'X';
         }
-      } else {
-          // Mark the bottom-adjacent of current coordinate if it is not undefined and is null
-        if (++x !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          --x;
+      }
+    } else {
+      --x1;
+      --y1;
+      --x2;
+      ++y2;
+      for (let i = 0; i < shipLength + 2; i++) {
+        if (gameboard[x1] !== undefined) {
+          if (i === 0 || i === shipLength + 1) {
+            gameboard[x1][++y1] = 'X';
+            --y1;
+          }
         }
-        // Mark the top-adjacent of current coordinate if it is not undefined and is null
-        if (--x !== undefined && gameboard[x][y] !== undefined && gameboard[x][y] === null) {
-          adjacentCoordinates[shipLength].adjacencies.push([x, y]);
-          ++x;
+        if (gameboard[x1] !== undefined && gameboard[y1] !== undefined) {
+          gameboard[x1++][y1] = 'X';
+        }
+        if (gameboard[x2] !== undefined && gameboard[y2] !== undefined) {
+          gameboard[x2++][y2] = 'X';
         }
       }
     }
   }
-  return adjacentCoordinates;
+  console.table(gameboard)
 }
+
 
 
 export { markAdjacentCells };

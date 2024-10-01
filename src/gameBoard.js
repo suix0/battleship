@@ -23,7 +23,7 @@ const Gameboard = () => {
     let startingPointY = setCoordinates();
     
     // Keep finding until random X and Y points a point where no ship is found
-    if (gameBoard[startingPointX][startingPointY] !== '') {
+    if (gameBoard[startingPointX][startingPointY] !== null) {
       while (gameBoard[startingPointX][startingPointY] !== null) {
         startingPointX = setCoordinates();
         startingPointY = setCoordinates();
@@ -36,6 +36,7 @@ const Gameboard = () => {
     adjacentCoordinates[ship.shipLength] = {
       shipCoordinates: [],
     };
+
     for (let i = 0; i < ship.shipLength; i++) {
       if (shipDirection === 'leftHorizontal') {
         startingPointY--;
@@ -55,7 +56,6 @@ const Gameboard = () => {
         adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
       }
     }
-    console.log(adjacentCoordinates[ship.shipLength].shipCoordinates)
 
     gameBoard = markAdjacentCells(gameBoard, adjacentCoordinates, ship.shipLength, shipDirection);
   }
