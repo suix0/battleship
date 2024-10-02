@@ -1,6 +1,6 @@
-import { markAdjacentCells } from "./shipAdjacencies.js";
 import { Ship } from "./ship.js";
-import { getShipDirection } from "./shipDirection.js";
+import { markShipCoordinates, getShipDirection } from "./markShips.js";
+import initializeCordinates from "./coordinates.js";
 
 const Gameboard = () => {
   // Create a gameboard
@@ -11,48 +11,17 @@ const Gameboard = () => {
       gameBoard[i][j] = null;
     }
   }
-
-  const setCoordinates = () => {
-    return Math.ceil(Math.random() * 9);
-  }
   
   const placeShip = (ship) => {
-    let startingPointX = setCoordinates();
-    let startingPointY = setCoordinates();
-    
-    // Keep finding until random X and Y points a point where no ship is found
-    if (gameBoard[startingPointX][startingPointY] !== null) {
-      while (gameBoard[startingPointX][startingPointY] !== null) {
-        startingPointX = setCoordinates();
-        startingPointY = setCoordinates();
-      }
-    }
+    // Initialize coordinates
+    const coordinates = initializeCordinates(ship.shipLength, gameBoard);
+    let [x, y] = [coordinates[0], coordinates[1]];
 
-    let shipDirection = getShipDirection(startingPointX, startingPointY, ship.shipLength, gameBoard);
+    // Get the ship direction
+    let shipDirection = getShipDirection(x, y, ship.shipLength, gameBoard);
 
-    // Place the ships
-    let shipCoordinates = [];
-    for (let i = 0; i < ship.shipLength; i++) {
-      if (shipDirection === 'leftHorizontal') {
-        startingPointY--;
-        gameBoard[startingPointX][startingPointY] = ship;
-        shipCoordinates.push([startingPointX, startingPointY]);
-      } else if (shipDirection === 'rightHorizontal') {
-        startingPointY++;
-        gameBoard[startingPointX][startingPointY] = ship;
-        shipCoordinates.push([startingPointX, startingPointY]);
-      } else if (shipDirection === 'upwardVertical') {
-        startingPointX--;
-        gameBoard[startingPointX][startingPointY] = ship;
-        shipCoordinates.push([startingPointX, startingPointY]);
-      } else if (shipDirection === 'downwardVertical') {
-        startingPointX++;
-        gameBoard[startingPointX][startingPointY] = ship;
-        shipCoordinates.push([startingPointX, startingPointY]);
-      }
-    }
-    console.log(shipCoordinates);
-    gameBoard = markAdjacentCells(gameBoard, shipCoordinates, ship.shipLength, shipDirection);
+    // Mark the ship in the board and mark its adjacencies
+    gameBoard = markShipCoordinates(x, y, ship, ship.shipLength, shipDirection, gameBoard);
   }
 
   // Place a 5-length carrier   

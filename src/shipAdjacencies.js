@@ -18,8 +18,6 @@ const markAdjacentCells = (gameboard, shipCoordinates, shipLength, direction) =>
       ++x2;
       --y2;
     }
-    console.log(x1, y1);
-    console.log(x2, y2);
     for (let i = 0; i < shipLength + 2; i++) {
       if (gameboard[y1] !== undefined) {
         if (i === 0 || i === shipLength + 1) {
@@ -27,8 +25,8 @@ const markAdjacentCells = (gameboard, shipCoordinates, shipLength, direction) =>
           --x1;
         }
       }
+      // Mark the adjacencies by incrementing or decrementing y depending on direction
       if (gameboard[x1] !== undefined && gameboard[y1] !== undefined) {
-        // Mark the adjacencies by incrementing or decrementing y depending on direction
         direction.includes('left') ? gameboard[x1][y1--] = 'X' : gameboard[x1][y1++] = 'X';
       } 
       if (gameboard[x2] !== undefined && gameboard[y2] !== undefined) {
@@ -37,6 +35,7 @@ const markAdjacentCells = (gameboard, shipCoordinates, shipLength, direction) =>
     }
   } else if (direction.includes('Vertical')) {
     if (direction.includes('upward')) {
+      console.log(x1, y1);
       ++x1;
       --y1;
       ++x2;
@@ -48,12 +47,15 @@ const markAdjacentCells = (gameboard, shipCoordinates, shipLength, direction) =>
       ++y2;
     }
     for (let i = 0; i < shipLength + 2; i++) {
+      console.log(x1, y1);
+      console.log(x2, y2)
       if (gameboard[x1] !== undefined) {
         if (i === 0 || i === shipLength + 1) {
           gameboard[x1][++y1] = 'X';
           --y1;
         }
       }
+       // Mark the adjacencies by incrementing or decrementing x depending on direction
       if (gameboard[x1] !== undefined && gameboard[y1] !== undefined) {
         direction.includes('upward') ? gameboard[x1--][y1] = 'X' : gameboard[x1++][y1] = 'X';
       }
