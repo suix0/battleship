@@ -16,8 +16,6 @@ const Gameboard = () => {
     return Math.ceil(Math.random() * 9);
   }
   
-  let adjacentCoordinates = {};
-
   const placeShip = (ship) => {
     let startingPointX = setCoordinates();
     let startingPointY = setCoordinates();
@@ -30,36 +28,31 @@ const Gameboard = () => {
       }
     }
 
-    const shipDirection = getShipDirection(startingPointX, startingPointY, ship.shipLength, gameBoard);
-    
-    // Place the ships
-    adjacentCoordinates[ship.shipLength] = {
-      shipCoordinates: [],
-    };
+    let shipDirection = getShipDirection(startingPointX, startingPointY, ship.shipLength, gameBoard);
 
+    // Place the ships
+    let shipCoordinates = [];
     for (let i = 0; i < ship.shipLength; i++) {
       if (shipDirection === 'leftHorizontal') {
         startingPointY--;
         gameBoard[startingPointX][startingPointY] = ship;
-        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
+        shipCoordinates.push([startingPointX, startingPointY]);
       } else if (shipDirection === 'rightHorizontal') {
         startingPointY++;
         gameBoard[startingPointX][startingPointY] = ship;
-        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
+        shipCoordinates.push([startingPointX, startingPointY]);
       } else if (shipDirection === 'upwardVertical') {
         startingPointX--;
         gameBoard[startingPointX][startingPointY] = ship;
-        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
+        shipCoordinates.push([startingPointX, startingPointY]);
       } else if (shipDirection === 'downwardVertical') {
         startingPointX++;
         gameBoard[startingPointX][startingPointY] = ship;
-        adjacentCoordinates[ship.shipLength].shipCoordinates.push([startingPointX, startingPointY]);
+        shipCoordinates.push([startingPointX, startingPointY]);
       }
     }
-
-    gameBoard = markAdjacentCells(gameBoard, adjacentCoordinates, ship.shipLength, shipDirection);
-
-    console.table(gameBoard);
+    console.log(shipCoordinates);
+    gameBoard = markAdjacentCells(gameBoard, shipCoordinates, ship.shipLength, shipDirection);
   }
 
   // Place a 5-length carrier   
@@ -67,30 +60,35 @@ const Gameboard = () => {
   carrierShip.shipLength = 5;
   placeShip(carrierShip);
   
-  // Place a 4-length battleship
-  const battleShip = Ship();
-  battleShip.shipLength = 4;
-  placeShip(battleShip);
+  // // Place a 4-length battleship
+  // const battleShip = Ship();
+  // battleShip.shipLength = 4;
+  // placeShip(battleShip);
 
-  // Place a 3-length cruiser
-  const cruiserShip = Ship();
-  cruiserShip.shipLength = 3;
-  placeShip(cruiserShip);
+  // // Place a 3-length cruiser
+  // const cruiserShip = Ship();
+  // cruiserShip.shipLength = 3;
+  // placeShip(cruiserShip);
 
-  // Place a 3-length submarine
-  const submarineShip = Ship();
-  submarineShip.shipLength = 3;
-  placeShip(submarineShip);
+  // // Place a 3-length submarine
+  // const submarineShip = Ship();
+  // submarineShip.shipLength = 3;
+  // placeShip(submarineShip);
 
-  // Place a 3-length destroyer
-  const destroyerShip = Ship();
-  destroyerShip.shipLength = 2;
-  placeShip(destroyerShip);
+  // // Place a 3-length destroyer
+  // const destroyerShip = Ship();
+  // destroyerShip.shipLength = 2;
+  // placeShip(destroyerShip);
 
-  return { gameBoard, placeShip };
+  const receiveAttack = () => {
+    return;
+  }
+
+
+  return { gameBoard, placeShip, receiveAttack };
 }
 
-const gameboardInstance = Gameboard();
+const gameboardInstance = Gameboard(); 
 console.table(gameboardInstance.gameBoard);
 
-// export { Gameboard };
+export { Gameboard };
