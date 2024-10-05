@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  font-size: 2rem;
+  margin: 0;
+}
+
+
+.main {
+  display: flex;
+  gap: 8rem;
+}
+
+.boardContainerPlayer,
+.boardContainerBot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  gap: 1rem;
+}
+
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.randomize {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.cell,
+.ship {
+  width: 34px;
+  height: 34px;
+}
+
+.cell {
+  border: 1px solid silver;
+}
+
+.ship {
+  border: 1px solid silver;
+  background-color: rgb(155, 241, 233);
+}

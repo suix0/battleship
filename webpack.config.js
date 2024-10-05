@@ -21,7 +21,7 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
+        test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
       {
@@ -40,7 +40,8 @@ module.exports = {
   },
   plugins: [
     new htmlWebpackPlugin({
-      title: "Battleship"
+      title: "Battleship",
+      template: "./src/index.html"
     }),
   ],
 };

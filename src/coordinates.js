@@ -1,8 +1,9 @@
 import getShipDirection from "./getShipDirection.js";
 
-const initializeCordinates = (shipLength, gameBoard) => {
+const initializeCoordinates = (shipLength, gameBoard) => {
   let x = Math.ceil(Math.random() * 9);
   let y = Math.ceil(Math.random() * 9);
+
   let shipDirection = getShipDirection(x, y, shipLength, gameBoard);
 
   // Continously find x and y coordinates until an optimal baord position
@@ -17,8 +18,7 @@ const initializeCordinates = (shipLength, gameBoard) => {
       break;
     }
   } while (true);
-
   return [x, y, shipDirection];
 }
 
-export default initializeCordinates;
+export { initializeCoordinates };

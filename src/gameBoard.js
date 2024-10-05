@@ -1,8 +1,12 @@
 import { Ship } from "./ship.js";
 import { markShipCoordinates } from "./markShips.js";
-import initializeCordinates from "./coordinates.js";
+import { initializeCoordinates } from "./coordinates.js";
 
+// let a = 0; // These was for testing purposes
+// let b = 0;
 const Gameboard = () => {
+  const totalShips = 17;
+
   // Create a gameboard
   let gameBoard = [];
   for (let i = 0; i < 10; i++) {
@@ -14,9 +18,9 @@ const Gameboard = () => {
   
   const placeShip = (ship) => {
     // Initialize coordinates and get the direction of the ship
-    const coordinates = initializeCordinates(ship.shipLength, gameBoard);
+    const coordinates = initializeCoordinates(ship.shipLength, gameBoard);
     let [x, y, shipDirection] = [coordinates[0], coordinates[1], coordinates[2]];
-
+    // [a, b] = [x, y];
     // Mark the ship in the board and mark its adjacencies
     gameBoard = markShipCoordinates(x, y, ship, ship.shipLength, shipDirection, gameBoard);
   }
@@ -46,15 +50,28 @@ const Gameboard = () => {
   destroyerShip.shipLength = 2;
   placeShip(destroyerShip);
 
-  const receiveAttack = () => {
-    return;
+  let shipsHit = 0;
+  const receiveAttack = (x, y) => {
+    if (gameBoard[x][y] !== null && gameBoard[x][y] !== 'X') {
+      // Only hit ships that are not yet hit
+      if (gameBoard[x][y].isShipHit() === false) {
+        console.log('A shit is hit!');
+        gameBoard[x][y].hit();
+        shipsHit++;
+      }
+    } else {
+      console.log('No ship is hit!');
+      gameBoard[x][y] = 'O'; // Mark missed attacks as 'O'
+    }
   }
 
-
-  return { gameBoard, placeShip, receiveAttack };
+  // report whether or not all of their ships have been sunk
+  const areShipsSunk = () => {
+    return totalShips === shipsHit;
+  }
+  
+  return { gameBoard, placeShip, receiveAttack, areShipsSunk };
 }
-
-const gameboardInstance = Gameboard(); 
-console.table(gameboardInstance.gameBoard);
+// const gameboardInstance = Gameboard(); 
 
 export { Gameboard };
