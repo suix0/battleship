@@ -3,34 +3,28 @@ import { Gameboard } from "./gameBoard";
 const boardToDom = (player, board) => {
   const container = document.querySelector('.main');
   const playerName = player.isPlayer() === true ? 'You' : 'Bot';
-
   const playerContainer = document.createElement('div');
   const playerNameDom = document.createElement('p');
-  playerNameDom.textContent = playerName;
-
+  
+  const boardDom = document.createElement('div');
   if (player.isPlayer()) {
     playerContainer.classList.add('boardContainerPlayer');
+    boardDom.classList.add('playerBoard');
   } else {
     playerContainer.classList.add('boardContainerBot');
+    boardDom.classList.add('botBoard');
   }
-
+  
+  playerNameDom.textContent = playerName;
   playerContainer.appendChild(playerNameDom);
 
   // Create a 10x10 board
-  createBoard(player, board, playerContainer);
+  createBoad(boardDom, board);
+  playerContainer.appendChild(boardDom);
   container.appendChild(playerContainer);
 }
 
-const createBoard = (player, board, container) => {
-  // Create a 10x10 board
-  const boardDom = document.createElement('div');
-  if (player.isPlayer()) {
-    boardDom.classList.add('board');
-    boardDom.classList.add('player');
-  } else {
-    boardDom.classList.add('board');
-    boardDom.classList.add('bot');
-  }
+const createBoad = (boardContainer, board) => {
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
       const boardCell = document.createElement('div');
@@ -39,12 +33,12 @@ const createBoard = (player, board, container) => {
       } else {
         boardCell.classList.add('cell');
       }
-      boardDom.appendChild(boardCell);
+      boardContainer.appendChild(boardCell);
     }
   }
-  container.appendChild(boardDom);
 }
 
+// Added randomize button
 const randomizeButton = (player) => {
   if (player.isPlayer()) {
     const randomizeBtn = document.createElement('a');
@@ -53,12 +47,12 @@ const randomizeButton = (player) => {
     randomizeBtn.textContent = 'Randomize'; 
     playerContainer.appendChild(randomizeBtn);
 
-    // Add event listener to randomize ship placement
+    // Add event listener in randomize button to randomize ship placement
     randomizeBtn.addEventListener('click', () => {
       player.playerBoard = Gameboard(); 
-      const boardPlayer = document.querySelector('.board.player');
-      boardPlayer.remove();
-      createBoard(player, player.playerBoard.gameBoard, playerContainer);
+      const boardPlayer = document.querySelector('.playerBoard');
+      boardPlayer.textContent = '';
+      createBoad(boardPlayer, player.playerBoard.gameBoard);
     })
   }
 }
