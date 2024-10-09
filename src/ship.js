@@ -1,6 +1,6 @@
 export const Ship = () => {
   let shipLength;
-  let hitCount;
+  let hitCount = 0;
 
   const hit = () => {
     hitCount++;
@@ -10,5 +10,8 @@ export const Ship = () => {
     return shipLength === hitCount;
   }
 
-  return { shipLength, hit, isSunk };
+  const getHitCount = () => {
+    return hitCount;
+  }
+  return { shipLength, getHitCount, hit, isSunk };
 }
