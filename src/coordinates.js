@@ -21,4 +21,19 @@ const initializeCoordinates = (shipLength, gameBoard) => {
   return [x, y, shipDirection];
 }
 
-export { initializeCoordinates };
+const initializeRandomCoordinates = () => {
+  let x = parseInt(Math.random() * 10);
+  let y = parseInt(Math.random() * 10);
+  do {
+    x = parseInt(Math.random() * 10);
+    y = parseInt(Math.random() * 10);
+    const cell = document.querySelector(`.player[data-row="${x}"][data-column="${y}"]`)
+    if (!cell.dataset.isHit) {
+      break;
+    }
+  } while (true);
+  return [x, y];
+}
+
+
+export { initializeCoordinates, initializeRandomCoordinates };

@@ -54,15 +54,11 @@ const Gameboard = () => {
   const receiveAttack = (x, y) => {
     if (gameBoard[x][y] !== null && gameBoard[x][y] !== 'X') {
       // Only hit ships that are not yet hit
-      if (gameBoard[x][y].isShipHit() === false) {
-        console.log('A shit is hit!');
-        gameBoard[x][y].hit();
-        shipsHit++;
-      }
-    } else {
-      console.log('No ship is hit!');
-      gameBoard[x][y] = 'O'; // Mark missed attacks as 'O'
+      gameBoard[x][y].hit();
+      shipsHit++;
+      return true;
     }
+    return false;
   }
 
   // report whether or not all of their ships have been sunk

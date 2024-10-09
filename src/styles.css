@@ -23,6 +23,7 @@ body {
 
 a {
   font-size: 1.5rem;
+  user-select: none;
 }
 
 p {
@@ -37,6 +38,43 @@ header {
   text-align: center;
   padding: 1rem;  
   text-shadow: 3px 3px 3px var(--scnd-clr);
+}
+
+button {
+  margin-bottom: 6rem;
+  padding: 0.8rem;
+  width: 15rem;
+  font-size: 2rem;
+  border: none;
+  border-radius: 30px;
+  background-color: var(--bg-clr);
+  color: var(--last-clr);
+  box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.75);
+  cursor: pointer;
+  font-family: 'Lora', serif;;
+}
+
+button:hover {
+  background-color: #3c4e67;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  filter: opacity(0.5) drop-shadow(0 0 0 rgb(37, 119, 154));
+}
+
+dialog {
+  gap: 1rem;
+  border: 0;
+  border-radius: 1rem;
+}
+
+dialog button {
+  margin: 0;
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
 }
 
 .main {
@@ -77,7 +115,7 @@ header {
   border: 1px solid var(--thrd-clr);
 }
 
-.ship {
+.player.ship {
   border: 1px solid var(--last-clr);
   background-color: var(--thrd-clr);
 }
