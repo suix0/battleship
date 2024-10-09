@@ -35,7 +35,6 @@ startBtn.addEventListener('click', () => {
     cellCallbacks.set(cell, callback); // Store the cell and its corresponding callback
     cell.addEventListener('click', callback);
   })
-  console.log(cellCallbacks);
 })
 
 const cellAttackCallback = (bot, player, cell) => {
