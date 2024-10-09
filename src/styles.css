@@ -70,6 +70,10 @@ dialog {
   border-radius: 1rem;
 }
 
+dialog p {
+  text-align: center;
+}
+
 dialog button {
   margin: 0;
   font-size: 1rem;
